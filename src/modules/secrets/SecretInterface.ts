@@ -1,10 +1,10 @@
-import SecretStatusInterface from './SecretStatusInterface';
+import { SecretStatusName } from '../../shared/types';
 
 interface SecretInterface {
   id: number;
   message: string;
-  imageUrl: string;
-  status?: SecretStatusInterface;
+  imageURL?: string;
+  status: SecretStatusName;
   createdAt: Date;
   updatedAt: Date;
 }

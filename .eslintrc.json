@@ -1,7 +1,8 @@
 {
   "env": {
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "airbnb-base",
@@ -16,11 +17,26 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
       {
         "ts": "never"
+      }
+    ],
+    "class-methods-use-this": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
+    "no-useless-constructor": "off",
+    "no-empty-function": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
       }
     ]
   },
@@ -28,10 +44,7 @@
     "import/resolver": {
       "node": {
         "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
+          ".ts"
         ]
       }
     }
