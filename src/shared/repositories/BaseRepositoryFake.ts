@@ -1,6 +1,7 @@
-import BaseRepositoryInterface from '../../../../shared/repositories/BaseRepositoryInterface';
+import BaseRepositoryInterface from './BaseRepositoryInterface';
 
 class BaseRepositoryFake<T> implements BaseRepositoryInterface<T> {
+  private count = 1;
   public items: T[] = [];
 
   create(partialItem: Partial<T>): T {
@@ -9,7 +10,8 @@ class BaseRepositoryFake<T> implements BaseRepositoryInterface<T> {
 
   save(item: T): Promise<T> {
     return new Promise((resolve) => {
-      this.items.push(item);
+      this.items.push({ id: this.count, ...item });
+      this.count += 1;
       resolve(item);
     });
   }

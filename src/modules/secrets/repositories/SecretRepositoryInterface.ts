@@ -2,6 +2,8 @@ import BaseRepositoryInterface from '../../../shared/repositories/BaseRepository
 import SecretInterface from '../SecretInterface';
 
 interface SecretRepositoryInterface
-  extends BaseRepositoryInterface<SecretInterface> {}
+  extends BaseRepositoryInterface<SecretInterface> {
+  findById(id: number): Promise<SecretInterface | undefined>;
+}
 
 export default SecretRepositoryInterface;

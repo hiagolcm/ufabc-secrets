@@ -21,6 +21,10 @@ class SecretRepositoryTypeORM implements SecretRepositoryInterface {
   public index() {
     return this.ormRepository.find();
   }
+
+  public findById(id: number): Promise<SecretInterface | undefined> {
+    return this.ormRepository.findOne({ id });
+  }
 }
 
 export default SecretRepositoryTypeORM;

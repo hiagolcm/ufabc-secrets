@@ -5,5 +5,6 @@ const secretsRoutes = Router();
 const secretsController = new SecretsController();
 
 secretsRoutes.post('/', secretsController.craete);
+secretsRoutes.get('/status/:id', secretsController.checkStatus);
 
 export default secretsRoutes;

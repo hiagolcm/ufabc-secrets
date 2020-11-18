@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { container } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
+import CheckSecretStatusService from '../../../services/CheckSecretStatusService';
 import CreateSecretService from '../../../services/CreateSecretService';
 
 class SecretsController {
@@ -13,7 +14,18 @@ class SecretsController {
       message,
     });
 
-    return res.json(secret);
+    return res.json({ secret });
+  }
+
+  public async checkStatus(req: Request, res: Response): Promise<Response> {
+    const { id: idStr } = req.params;
+    const secretId = parseInt(idStr, 10);
+
+    const secretStatusService = container.resolve(CheckSecretStatusService);
+
+    const secretStatus = await secretStatusService.execute({ secretId });
+
+    return res.json({ status: secretStatus });
   }
 }
 
