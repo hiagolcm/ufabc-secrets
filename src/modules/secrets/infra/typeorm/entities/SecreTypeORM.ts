@@ -22,10 +22,10 @@ class SecretTypeORM implements SecretInterface {
   @Column({ type: 'text' })
   status!: SecretStatusName;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'created_at' })
   updatedAt!: Date;
 }
 

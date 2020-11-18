@@ -1,25 +1,13 @@
-import { getRepository, Repository } from 'typeorm';
+import BaseRepositoryTypeORM from '../../../../../shared/infra/typeorm/repositories/BaseRepositoryTypeORM';
 import SecretRepositoryInterface from '../../../repositories/SecretRepositoryInterface';
 import SecretInterface from '../../../SecretInterface';
 import SecretTypeORM from '../entities/SecreTypeORM';
 
-class SecretRepositoryTypeORM implements SecretRepositoryInterface {
-  private ormRepository: Repository<SecretTypeORM>;
-
+class SecretRepositoryTypeORM
+  extends BaseRepositoryTypeORM<SecretInterface>
+  implements SecretRepositoryInterface {
   constructor() {
-    this.ormRepository = getRepository(SecretTypeORM);
-  }
-
-  public create(partialSecret: Partial<SecretInterface>) {
-    return this.ormRepository.create(partialSecret);
-  }
-
-  public save(secret: SecretInterface) {
-    return this.ormRepository.save(secret);
-  }
-
-  public index() {
-    return this.ormRepository.find();
+    super(SecretTypeORM);
   }
 
   public findById(id: number): Promise<SecretInterface | undefined> {
