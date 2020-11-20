@@ -1,8 +1,12 @@
-import { Column, CreateDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import UserInterface from '../../../UserInterface';
 
 @Entity('users')
 class UserTypeORM implements UserInterface {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
+
   @Column()
   name!: string;
 
@@ -10,6 +14,7 @@ class UserTypeORM implements UserInterface {
   email!: string;
 
   @Column()
+  @Exclude()
   password!: string;
 
   @CreateDateColumn({ name: 'created_at' })

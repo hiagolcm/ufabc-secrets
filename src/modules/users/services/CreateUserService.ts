@@ -36,12 +36,12 @@ class CreateUserService {
       throw new AppError(e.details[0].message);
     }
 
-    const encodedPassword = await hash(password, 8);
+    const encryptedPassword = await hash(password, 8);
 
     const user = this.userRepository.create({
       name,
       email,
-      password: encodedPassword,
+      password: encryptedPassword,
     });
 
     return this.userRepository.save(user);
