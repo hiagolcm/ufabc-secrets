@@ -5,6 +5,7 @@ interface SecretInterface {
   message: string;
   imageURL?: string;
   status: SecretStatusName;
+  lastReviewRequiest?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

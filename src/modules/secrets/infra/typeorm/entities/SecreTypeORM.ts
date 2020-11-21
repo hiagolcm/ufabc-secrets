@@ -22,6 +22,9 @@ class SecretTypeORM implements SecretInterface {
   @Column({ type: 'text' })
   status!: SecretStatusName;
 
+  @Column({ name: 'last_review_request', nullable: true })
+  lastReviewRequiest?: Date;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
