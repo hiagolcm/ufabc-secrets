@@ -8,7 +8,7 @@ class BaseRepositoryTypeORM<T> implements BaseRepositoryInterface<T> {
     this.ormRepository = getRepository<T>(entity);
   }
 
-  public create(partialItem: Partial<T>) {
+  public create(partialItem: DeepPartial<T>) {
     return this.ormRepository.create(partialItem as DeepPartial<T>);
   }
 
@@ -18,6 +18,10 @@ class BaseRepositoryTypeORM<T> implements BaseRepositoryInterface<T> {
 
   public index() {
     return this.ormRepository.find();
+  }
+
+  public findById(id: number | string) {
+    return this.ormRepository.findOne(id);
   }
 }
 

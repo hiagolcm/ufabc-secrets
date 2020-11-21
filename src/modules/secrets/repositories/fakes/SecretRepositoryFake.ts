@@ -4,12 +4,6 @@ import BaseRepositoryFake from '../../../../shared/repositories/BaseRepositoryFa
 
 class SecretRepositoryFake
   extends BaseRepositoryFake<SecretInterface>
-  implements SecretRepositoryInterface {
-  findById(id: number): Promise<SecretInterface | undefined> {
-    return new Promise((resolve) => {
-      resolve(this.items.find((item) => item.id === id));
-    });
-  }
-}
+  implements SecretRepositoryInterface {}
 
 export default SecretRepositoryFake;

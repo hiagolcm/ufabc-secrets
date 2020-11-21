@@ -25,7 +25,7 @@ class SecretTypeORM implements SecretInterface {
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'created_at' })
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
 }
 

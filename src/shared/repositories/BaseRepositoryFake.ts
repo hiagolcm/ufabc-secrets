@@ -10,8 +10,21 @@ class BaseRepositoryFake<T> implements BaseRepositoryInterface<T> {
 
   save(item: T): Promise<T> {
     return new Promise((resolve) => {
-      this.items.push({ id: this.count, ...item });
+      if ((item as any).id) {
+        const index = this.items.findIndex(
+          (currentItem: any) => currentItem.id === (item as any).id,
+        );
+
+        if (index) {
+          this.items[index] === item;
+          return item;
+        }
+      }
+
+      (item as any).id = this.count;
       this.count += 1;
+
+      this.items.push(item);
       resolve(item);
     });
   }
@@ -19,6 +32,16 @@ class BaseRepositoryFake<T> implements BaseRepositoryInterface<T> {
   index(): Promise<T[]> {
     return new Promise((resolve) => {
       resolve(this.items);
+    });
+  }
+
+  findById(id: number | string): Promise<T> {
+    return new Promise((resolve) => {
+      resolve(
+        this.items.find((item: any) => {
+          return item.id === id;
+        }),
+      );
     });
   }
 }

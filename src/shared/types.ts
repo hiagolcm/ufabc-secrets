@@ -2,6 +2,11 @@ export enum SecretStatusName {
   Pending = 'PENDING',
   PublishPending = 'PUBLISH_PENDING',
   Published = 'PUBLISHED',
-  DENIED = 'DENIED',
-  FAILED = 'FAILED',
+  Denied = 'DENIED',
+  Failed = 'FAILED',
+}
+
+export enum ReviewResult {
+  Denied = 'DENIED',
+  Accepted = 'Accepted',
 }
