@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { container, injectable } from 'tsyringe';
+import { container } from 'tsyringe';
 import CheckSecretStatusService from '../../../services/CheckSecretStatusService';
 import CreateSecretService from '../../../services/CreateSecretService';
+import GetNextSecretToReviewService from '../../../services/GetNextSecretToReviewService';
 
 class SecretsController {
   public async craete(req: Request, res: Response): Promise<Response> {
@@ -26,6 +27,14 @@ class SecretsController {
     const secretStatus = await secretStatusService.execute({ secretId });
 
     return res.json({ status: secretStatus });
+  }
+
+  public async getNextToReview(_: Request, res: Response): Promise<Response> {
+    const getNextService = container.resolve(GetNextSecretToReviewService);
+
+    const secret = await getNextService.execute();
+
+    return res.status(secret ? 200 : 204).json(secret);
   }
 }
 

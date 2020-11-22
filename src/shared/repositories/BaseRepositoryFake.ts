@@ -1,10 +1,11 @@
+import { DeepPartial } from 'typeorm';
 import BaseRepositoryInterface from './BaseRepositoryInterface';
 
 class BaseRepositoryFake<T> implements BaseRepositoryInterface<T> {
   private count = 1;
   public items: T[] = [];
 
-  create(partialItem: Partial<T>): T {
+  create(partialItem: DeepPartial<T>): T {
     return partialItem as T;
   }
 

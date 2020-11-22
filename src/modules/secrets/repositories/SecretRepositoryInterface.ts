@@ -2,6 +2,10 @@ import BaseRepositoryInterface from '../../../shared/repositories/BaseRepository
 import SecretInterface from '../SecretInterface';
 
 interface SecretRepositoryInterface
-  extends BaseRepositoryInterface<SecretInterface> {}
+  extends BaseRepositoryInterface<SecretInterface> {
+  getNextSecretToReview(
+    transactionManager?: unknown,
+  ): Promise<SecretInterface | undefined>;
+}
 
 export default SecretRepositoryInterface;

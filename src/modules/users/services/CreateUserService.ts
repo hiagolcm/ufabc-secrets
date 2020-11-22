@@ -1,4 +1,4 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { hash } from 'bcrypt';
 import AppError from '../../../shared/errors/AppError';
 import CreateUserDTO from '../dtos/CreateUserDTO';
@@ -8,11 +8,12 @@ import joi from 'joi';
 import passwordComplexity from 'joi-password-complexity';
 
 const createUserDTOSchema = joi.object({
-  name: joi.string().min(5).max(255),
-  email: joi.string().email(),
-  password: passwordComplexity(),
+  name: joi.string().min(5).max(255).required(),
+  email: joi.string().email().required(),
+  password: passwordComplexity().required(),
 });
 
+@injectable()
 class CreateUserService {
   constructor(
     @inject('UserRepository')

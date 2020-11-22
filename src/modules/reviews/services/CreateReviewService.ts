@@ -8,9 +8,12 @@ import ReviewRepositoryInterface from '../repositories/ReviewRepositoryInterface
 import { ReviewResult, SecretStatusName } from '../../../shared/types';
 
 const createReviewDTO = joi.object({
-  userId: joi.string(),
-  secretId: joi.number().integer().positive(),
-  result: joi.string().valid(...Object.values(ReviewResult)),
+  userId: joi.string().required(),
+  secretId: joi.number().integer().positive().required(),
+  result: joi
+    .string()
+    .valid(...Object.values(ReviewResult))
+    .required(),
 });
 
 @injectable()

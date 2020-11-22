@@ -8,5 +8,5 @@ export enum SecretStatusName {
 
 export enum ReviewResult {
   Denied = 'DENIED',
-  Accepted = 'Accepted',
+  Accepted = 'ACCEPTED',
 }

@@ -1,5 +1,10 @@
-import { Exclude } from 'class-transformer';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import UserInterface from '../../../UserInterface';
 
 @Entity('users')
@@ -14,7 +19,6 @@ class UserTypeORM implements UserInterface {
   email!: string;
 
   @Column()
-  @Exclude()
   password!: string;
 
   @CreateDateColumn({ name: 'created_at' })

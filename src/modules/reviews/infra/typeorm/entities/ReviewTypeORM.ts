@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ReviewResult } from '../../../../shared/types';
-import SecretTypeORM from '../../../secrets/infra/typeorm/entities/SecreTypeORM';
-import UserTypeORM from '../../../users/infra/typeorm/entities/UserTypeORM';
-import ReviewInterface from '../../ReviewInterface';
+import { ReviewResult } from '../../../../../shared/types';
+import SecretTypeORM from '../../../../secrets/infra/typeorm/entities/SecreTypeORM';
+import UserTypeORM from '../../../../users/infra/typeorm/entities/UserTypeORM';
+import ReviewInterface from '../../../ReviewInterface';
 
 @Entity('reviews')
 class ReviewTypeORM implements ReviewInterface {
