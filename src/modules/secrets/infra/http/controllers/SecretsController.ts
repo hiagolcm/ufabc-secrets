@@ -3,18 +3,17 @@ import { container } from 'tsyringe';
 import CheckSecretStatusService from '../../../services/CheckSecretStatusService';
 import CreateSecretService from '../../../services/CreateSecretService';
 import GetNextSecretToReviewService from '../../../services/GetNextSecretToReviewService';
+import UploadMediaService from '../../../services/UploadImageService';
 
 class SecretsController {
   public async craete(req: Request, res: Response): Promise<Response> {
-    const { message } = req.body;
+    const { message, mediaIds } = req.body;
 
     const createSecretService = container.resolve(CreateSecretService);
 
     const secret = await createSecretService.execute({
       message,
-      mediaNames: (req.files as Express.Multer.File[]).map(
-        (file) => file.filename,
-      ),
+      mediaIds,
     });
 
     return res.json({ secret });
@@ -38,7 +37,27 @@ class SecretsController {
 
     return res
       .status(secret ? 200 : 204)
-      .json({ ...secret, imageURLs: secret?.getUrls() });
+      .json({ ...secret, mediaURLs: secret?.getUrls() });
+  }
+
+  public async uploadMedias(req: Request, res: Response): Promise<Response> {
+    const uploadMediaService = container.resolve(UploadMediaService);
+
+    const mediaNames = (req.files as Express.Multer.File[]).map(
+      (file) => file.filename,
+    );
+
+    const mediaPromises = mediaNames.map((mediaName) =>
+      uploadMediaService.execute({ mediaName }),
+    );
+
+    const medias = await Promise.all(mediaPromises);
+
+    medias.sort((a, b) =>
+      mediaNames.indexOf(a.name) > mediaNames.indexOf(b.name) ? 1 : -1,
+    );
+
+    return res.json(medias);
   }
 }
 

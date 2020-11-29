@@ -15,6 +15,9 @@ class MediaTypeORM implements MediaInterface {
   @Column()
   name!: string;
 
+  @Column({ name: 'expires_at', nullable: true })
+  expiresAt?: Date;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

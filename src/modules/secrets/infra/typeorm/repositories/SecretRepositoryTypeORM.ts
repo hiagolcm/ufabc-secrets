@@ -33,7 +33,7 @@ class SecretRepositoryTypeORM
           lastReviewRequiest: LessThan(limit),
         },
       ],
-      relations: ['images'],
+      relations: ['medias'],
       order: { createdAt: 'ASC' },
       take: 1,
     });

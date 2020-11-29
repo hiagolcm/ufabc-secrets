@@ -6,9 +6,7 @@ import SecretRepositoryInterface from '../repositories/SecretRepositoryInterface
 import SecretInterface from '../SecretInterface';
 import { MAX_SECRET_LENGTH } from '../../../shared/constants';
 import AppError from '../../../shared/errors/AppError';
-import StorageProviderInterface from '../../../shared/containers/providers/StorageProvider/StorageProviderInterface';
-import { DeepPartial } from 'typeorm';
-import MediaInterface from '../MediaInterface';
+import MediaRepositoryInterface from '../repositories/MediaRepository';
 
 const createSecretDtoSchema = joi.object({
   message: joi.string().min(1).max(MAX_SECRET_LENGTH).required(),
@@ -19,23 +17,33 @@ class CreateSecretService {
   constructor(
     @inject('SecretRepository')
     private secretRepository: SecretRepositoryInterface,
-    @inject('StorageProvider')
-    private storageProvider: StorageProviderInterface,
+    @inject('MediaRepository')
+    private mediaRepository: MediaRepositoryInterface,
   ) {}
 
   public async execute({
     message,
-    mediaNames,
+    mediaIds,
   }: CreateSecretDTO): Promise<SecretInterface> {
-    const imageUploadPromises = mediaNames.map((name) =>
-      this.storageProvider.saveFile(name),
-    );
+    const medias = await this.mediaRepository.findByIds(mediaIds);
 
-    await Promise.all(imageUploadPromises);
+    if (medias.length !== mediaIds.length) {
+      throw new AppError('Some of the medias was not found');
+    }
 
-    const medias: DeepPartial<MediaInterface>[] = mediaNames.map((name) => ({
-      name,
-    }));
+    medias.forEach((media) => {
+      const { expiresAt } = media;
+
+      if (!expiresAt) {
+        throw new AppError(`The media ${media.id} has already been used`);
+      }
+
+      if (expiresAt <= new Date()) {
+        throw new AppError(`The media ${media.id} expired`);
+      }
+
+      media.expiresAt = null;
+    });
 
     const newSecret = this.secretRepository.create({ message, medias });
 

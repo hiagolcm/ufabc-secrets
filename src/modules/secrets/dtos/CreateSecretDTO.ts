@@ -1,6 +1,6 @@
 interface CreateSecretDTO {
   message: string;
-  mediaNames: string[];
+  mediaIds: string[];
 }
 
 export default CreateSecretDTO;

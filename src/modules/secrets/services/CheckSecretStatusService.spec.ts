@@ -1,13 +1,13 @@
 import 'reflect-metadata';
-import StorageProviderFake from '../../../shared/containers/providers/StorageProvider/implementations/fakes/StorageProviderFake';
 import AppError from '../../../shared/errors/AppError';
 import { SecretStatusName } from '../../../shared/types';
+import MediaRepositoryFake from '../repositories/fakes/MediaRepositoryFake';
 import SecretRepositoryFake from '../repositories/fakes/SecretRepositoryFake';
 import CheckSecretStatusService from './CheckSecretStatusService';
 import CreateSecretService from './CreateSecretService';
 
 let secretRepositoryFake = new SecretRepositoryFake();
-const storageProvider = new StorageProviderFake();
+const mediaRepositoryFake = new MediaRepositoryFake();
 
 describe('CheckSecretStatus', () => {
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('CheckSecretStatus', () => {
   it('should return the status of an existing secret', async () => {
     const createSecretService = new CreateSecretService(
       secretRepositoryFake,
-      storageProvider,
+      mediaRepositoryFake,
     );
     const checkSecretStatusService = new CheckSecretStatusService(
       secretRepositoryFake,
@@ -25,7 +25,7 @@ describe('CheckSecretStatus', () => {
 
     const dto = {
       message: 'my secret.',
-      mediaNames: ['myImage.jpg'],
+      mediaIds: [],
     };
 
     await createSecretService.execute(dto);

@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -20,6 +21,7 @@ class SecretTypeORM implements SecretInterface {
   message!: string;
 
   @ManyToMany(() => MediaTypeORM, { cascade: true })
+  @JoinTable()
   medias!: MediaInterface[];
 
   @Column({ type: 'text' })

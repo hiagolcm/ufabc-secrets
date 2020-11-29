@@ -45,6 +45,16 @@ class BaseRepositoryFake<T> implements BaseRepositoryInterface<T> {
       );
     });
   }
+
+  findByIds(ids: number[] | string[]): Promise<T[]> {
+    return new Promise((resolve) => {
+      resolve(
+        this.items.filter((item: any) => {
+          return (ids as any[]).includes(item.id);
+        }),
+      );
+    });
+  }
 }
 
 export default BaseRepositoryFake;

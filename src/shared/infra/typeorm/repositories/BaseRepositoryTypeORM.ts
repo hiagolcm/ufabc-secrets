@@ -23,6 +23,10 @@ class BaseRepositoryTypeORM<T> implements BaseRepositoryInterface<T> {
   public findById(id: number | string) {
     return this.ormRepository.findOne(id);
   }
+
+  public findByIds(ids: number[] | string[]) {
+    return this.ormRepository.findByIds(ids);
+  }
 }
 
 export default BaseRepositoryTypeORM;
