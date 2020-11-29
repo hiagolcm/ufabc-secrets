@@ -8,7 +8,7 @@ import { MAX_SECRET_LENGTH } from '../../../shared/constants';
 import AppError from '../../../shared/errors/AppError';
 import StorageProviderInterface from '../../../shared/containers/providers/StorageProvider/StorageProviderInterface';
 import { DeepPartial } from 'typeorm';
-import ImageInterface from '../ImageInterface';
+import MediaInterface from '../MediaInterface';
 
 const createSecretDtoSchema = joi.object({
   message: joi.string().min(1).max(MAX_SECRET_LENGTH).required(),
@@ -25,19 +25,19 @@ class CreateSecretService {
 
   public async execute({
     message,
-    imageNames,
+    mediaNames,
   }: CreateSecretDTO): Promise<SecretInterface> {
-    const imageUploadPromises = imageNames.map((name) =>
+    const imageUploadPromises = mediaNames.map((name) =>
       this.storageProvider.saveFile(name),
     );
 
     await Promise.all(imageUploadPromises);
 
-    const images: DeepPartial<ImageInterface>[] = imageNames.map((name) => ({
+    const medias: DeepPartial<MediaInterface>[] = mediaNames.map((name) => ({
       name,
     }));
 
-    const newSecret = this.secretRepository.create({ message, images });
+    const newSecret = this.secretRepository.create({ message, medias });
 
     try {
       joi.assert({ message }, createSecretDtoSchema);

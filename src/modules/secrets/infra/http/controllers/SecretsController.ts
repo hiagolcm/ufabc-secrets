@@ -12,7 +12,7 @@ class SecretsController {
 
     const secret = await createSecretService.execute({
       message,
-      imageNames: (req.files as Express.Multer.File[]).map(
+      mediaNames: (req.files as Express.Multer.File[]).map(
         (file) => file.filename,
       ),
     });

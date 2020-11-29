@@ -23,13 +23,13 @@ describe('CreateSecret', () => {
 
     const dto: CreateSecretDTO = {
       message: 'x'.repeat(MAX_SECRET_LENGTH),
-      imageNames: ['image.jpg'],
+      mediaNames: ['image.jpg'],
     };
 
     const secret = await createSecretService.execute(dto);
 
     expect(secret.message).toBe(dto.message);
-    expect(secret.images![0].name).toBe(dto.imageNames[0]);
+    expect(secret.medias![0].name).toBe(dto.mediaNames[0]);
     expect(secret.status).toBe(SecretStatusName.Pending);
 
     const secrets = await secretRepositoryFake.index();
@@ -45,7 +45,7 @@ describe('CreateSecret', () => {
 
     const dto = {
       message: 'x'.repeat(MAX_SECRET_LENGTH + 1),
-      imageNames: [],
+      mediaNames: [],
     };
 
     await expect(createSecretService.execute(dto)).rejects.toBeInstanceOf(
@@ -61,7 +61,7 @@ describe('CreateSecret', () => {
 
     const dto = {
       message: '',
-      imageNames: [],
+      mediaNames: [],
     };
 
     await expect(createSecretService.execute(dto)).rejects.toBeInstanceOf(

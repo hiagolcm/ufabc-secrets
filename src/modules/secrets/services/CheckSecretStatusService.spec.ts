@@ -25,7 +25,7 @@ describe('CheckSecretStatus', () => {
 
     const dto = {
       message: 'my secret.',
-      imageNames: ['myImage.jpg'],
+      mediaNames: ['myImage.jpg'],
     };
 
     await createSecretService.execute(dto);

@@ -2,14 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { SecretStatusName } from '../../../../../shared/types';
-import ImageInterface from '../../../ImageInterface';
+import MediaInterface from '../../../MediaInterface';
 import SecretInterface from '../../../SecretInterface';
-import ImageTypeORM from './ImageTypeORM';
+import MediaTypeORM from './MediaTypeORM';
 
 @Entity('secrets')
 class SecretTypeORM implements SecretInterface {
@@ -19,8 +19,8 @@ class SecretTypeORM implements SecretInterface {
   @Column({ length: 280 })
   message!: string;
 
-  @OneToMany(() => ImageTypeORM, (image) => image.secret, { cascade: true })
-  images!: ImageInterface[];
+  @ManyToMany(() => MediaTypeORM, { cascade: true })
+  medias!: MediaInterface[];
 
   @Column({ type: 'text' })
   status!: SecretStatusName;
@@ -40,7 +40,7 @@ class SecretTypeORM implements SecretInterface {
         ? 'https://ufabc-secrets.s3-sa-east-1.amazonaws.com'
         : 'localhost:3333';
 
-    return this.images.map((image) => `${url}/${image.name}`);
+    return this.medias.map((media) => `${url}/${media.name}`);
   }
 }
 

@@ -1,10 +1,10 @@
 import { SecretStatusName } from '../../shared/types';
-import ImageInterface from './ImageInterface';
+import MediaInterface from './MediaInterface';
 
 interface SecretInterface {
   id: number;
   message: string;
-  images?: ImageInterface[];
+  medias?: MediaInterface[];
   status: SecretStatusName;
   lastReviewRequiest?: Date;
   createdAt: Date;

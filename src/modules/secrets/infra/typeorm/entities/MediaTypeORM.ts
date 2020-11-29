@@ -2,23 +2,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import ImageInterface from '../../../ImageInterface';
-import SecretTypeORM from './SecreTypeORM';
+import MediaInterface from '../../../MediaInterface';
 
-@Entity('images')
-class ImageTypeORM implements ImageInterface {
+@Entity('medias')
+class MediaTypeORM implements MediaInterface {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
   name!: string;
-
-  @ManyToOne(() => SecretTypeORM, (secret) => secret.images)
-  secret!: SecretTypeORM;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
@@ -27,4 +22,4 @@ class ImageTypeORM implements ImageInterface {
   updatedAt!: Date;
 }
 
-export default ImageTypeORM;
+export default MediaTypeORM;
